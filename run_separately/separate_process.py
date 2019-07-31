@@ -5,8 +5,10 @@ import inspect
 
 DEFAULT_METHODS = ["start", "stop"]
 
-def run_in_separate_process(klass, callable_methods=DEFAULT_METHODS):
+class KlassProcessWrapper:
+    pass
 
+def run_in_separate_process(klass, callable_methods=DEFAULT_METHODS):
     class KlassWrapper:
         def __repr__(self):
             return f"Wrapped_{self._inst_klass.__class__.__name__}"
@@ -57,13 +59,15 @@ def run_in_separate_process(klass, callable_methods=DEFAULT_METHODS):
             self._process_stop_event.set()
 
         def __getattribute__(self, key):
-        #     # try:
-        #     # value = super().__getattribute__(key)
-        #     # except AttributeError:
-        #     value = self._inst_klass.__getattribute__(key)
-        #
-        #     return value
-            import pdb; pdb.set_trace()
+            #     # try:
+            #     # value = super().__getattribute__(key)
+            #     # except AttributeError:
+            #     value = self._inst_klass.__getattribute__(key)
+            #
+            #     return value
+            import pdb
+
+            pdb.set_trace()
 
     wrapper = KlassWrapper
     wrapper.__name__ = klass.__name__
